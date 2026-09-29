@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101512">
+  <meta name="description" content="ThreatLens security operations and threat intelligence dashboard">
+  <title>ThreatLens | Security Operations</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" aria-label="Main navigation">
+      <a class="brand" href="#overview" aria-label="ThreatLens overview">
+        <span class="brand-mark"><span></span><span></span><span></span><span></span></span>
+        <span class="brand-name">threat<span>lens</span><small>INTELLIGENCE OPERATIONS</small></span>
+      </a>
+      <div class="workspace-label">WORKSPACE <span>⌄</span></div>
+      <nav class="primary-nav">
+        <button class="nav-item active" data-view="overview"><span class="nav-icon">◫</span>Overview</button>
+        <button class="nav-item" data-view="alerts"><span class="nav-icon">⌁</span>Alert queue <span class="nav-count" id="nav-alert-count">0</span></button>
+        <button class="nav-item" data-view="indicators"><span class="nav-icon">◎</span>Indicators</button>
+      </nav>
+      <div class="sidebar-rule"></div>
+      <div class="nav-section-label">INTELLIGENCE</div>
+      <div class="nav-static"><span class="nav-icon">⌘</span>Threat sources <span class="source-live"><i></i> 6</span></div>
+      <div class="nav-static"><span class="nav-icon">⌗</span>ATT&amp;CK coverage</div>
+      <div class="sidebar-bottom">
+        <div class="system-status"><span class="status-dot"></span><span><b>All systems operational</b><small>Last checked just now</small></span><span class="status-chevron">···</span></div>
+        <div class="user-profile"><div class="avatar">PN</div><span><b>Priya Nair</b><small>Tier 2 Analyst</small></span><span class="profile-more">⌄</span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <div class="breadcrumbs"><span>Operations</span><b>/</b><strong id="breadcrumb-current">Overview</strong></div>
+        <div class="topbar-actions">
+          <label class="global-search"><span>⌕</span><input id="global-search" type="search" placeholder="Search intelligence" autocomplete="off"><kbd>⌘ K</kbd></label>
+          <button class="icon-button notifications" id="notifications-button" aria-label="Notifications"><span>♧</span><i></i></button>
+          <div class="top-avatar">PN</div>
+        </div>
+      </header>
+
+      <section class="content-area">
+        <div class="page-heading">
+          <div><div class="eyebrow"><span class="live-pulse"></span> THREAT INTELLIGENCE CENTER <span class="eyebrow-divider">/</span> <span id="today-label">LIVE OPERATIONS</span></div><h1 id="page-title">Good morning, Priya<span class="heading-period">.</span></h1><p id="page-subtitle">Here’s your threat landscape for today.</p></div>
+          <div class="heading-actions"><button class="button button-quiet" id="refresh-button"><span class="refresh-icon">↻</span> Refresh</button><button class="button button-primary" id="export-button"><span>↓</span> Export report</button></div>
+        </div>
+
+        <div class="metrics-grid" id="metrics-grid" aria-label="Threat metrics">
+          <article class="metric-card metric-main"><div class="metric-top"><span class="metric-label">ACTIVE INDICATORS</span><span class="metric-icon icon-lime">◎</span></div><div class="metric-value" id="metric-active">—</div><div class="metric-foot"><span class="metric-trend trend-up">↗ 12.8%</span><span>vs. last 7 days</span><span class="metric-spark" id="spark-active"></span></div></article>
+          <article class="metric-card"><div class="metric-top"><span class="metric-label">HIGH RISK</span><span class="metric-icon icon-coral">▲</span></div><div class="metric-value" id="metric-high">—</div><div class="metric-foot"><span class="severity-legend"><i class="dot-critical"></i> Critical / High</span></div></article>
+          <article class="metric-card"><div class="metric-top"><span class="metric-label">OPEN ALERTS</span><span class="metric-icon icon-blue">⌁</span></div><div class="metric-value" id="metric-open">—</div><div class="metric-foot"><span class="metric-trend trend-down">↓ 8.4%</span><span>vs. last 7 days</span></div></article>
+          <article class="metric-card"><div class="metric-top"><span class="metric-label">UNASSIGNED</span><span class="metric-icon icon-amber">◷</span></div><div class="metric-value" id="metric-unassigned">—</div><div class="metric-foot"><span class="metric-note"><i class="dot-amber"></i> Needs attention</span></div></article>
+        </div>
+
+        <div class="overview-grid" id="overview-panels">
+          <section class="panel trend-panel">
+            <div class="panel-heading"><div><div class="panel-kicker">ACTIVITY</div><h2>Threat activity</h2></div><div class="panel-controls"><div class="legend"><span><i class="legend-new"></i> Ingested</span><span><i class="legend-resolved"></i> Resolved</span></div><button class="select-button" aria-label="Trend period">7 days <span>⌄</span></button></div></div>
+            <div class="chart-summary"><strong id="weekly-alert-total">—</strong><span>alerts this week</span><span class="chart-summary-change">↑ 6.2%</span></div>
+            <div class="chart-wrap"><div class="y-labels"><span>20</span><span>15</span><span>10</span><span>5</span><span>0</span></div><svg id="activity-chart" viewBox="0 0 720 160" preserveAspectRatio="none" role="img" aria-label="Weekly threat activity chart"></svg></div>
+            <div class="x-labels" id="chart-days"></div>
+          </section>
+
+          <section class="panel sources-panel">
+            <div class="panel-heading"><div><div class="panel-kicker">COLLECTION</div><h2>Feed health</h2></div><button class="text-action" id="view-sources">View all <span>↗</span></button></div>
+            <div class="source-summary"><span class="source-big">06</span><span class="source-summary-label">active sources<br><b>5 healthy · 1 delayed</b></span><span class="source-health-ring"><b>83<small>%</small></b></span></div>
+            <div class="source-list" id="source-list"></div>
+            <div class="sources-footer"><span class="status-dot"></span> Last sync <b>2 minutes ago</b><span class="source-sync">↻</span></div>
+          </section>
+
+          <section class="panel alert-panel" id="alert-panel">
+            <div class="panel-heading alert-heading"><div><div class="panel-kicker">PRIORITIZED QUEUE <span class="heading-count" id="queue-count">0</span></div><h2>Alerts requiring attention</h2></div><button class="text-action" id="see-all-alerts">View queue <span>→</span></button></div>
+            <div class="queue-toolbar"><div class="filter-tabs" role="tablist" aria-label="Filter alerts"><button class="filter-tab selected" data-filter="all">All alerts</button><button class="filter-tab" data-filter="new">New <span id="new-count">0</span></button><button class="filter-tab" data-filter="in-progress">In progress</button></div><span class="sort-label">SORTED BY <b>SEVERITY ↓</b></span></div>
+            <div class="table-scroll"><table class="alert-table"><thead><tr><th>INDICATOR</th><th>SEVERITY</th><th>DETECTION</th><th>ASSIGNEE</th><th>STATUS</th><th></th></tr></thead><tbody id="alert-rows"></tbody></table></div>
+            <div class="table-empty hidden" id="alert-empty">No alerts match this view.</div>
+            <div class="table-footer"><span>Showing <b id="showing-alert-count">0</b> prioritized alerts</span><button class="pagination-button" id="next-alerts" aria-label="Show more alerts">View all alerts <span>→</span></button></div>
+          </section>
+
+          <section class="panel exposure-panel">
+            <div class="panel-heading"><div><div class="panel-kicker">THREAT MIX</div><h2>Top categories</h2></div><button class="more-button" aria-label="More category options">···</button></div>
+            <div class="category-chart" id="category-chart"></div>
+            <div class="category-note"><span class="category-note-icon">↗</span><span>Phishing activity is up <b>18%</b> compared with last week.</span></div>
+          </section>
+        </div>
+
+        <section class="panel indicators-panel hidden" id="indicators-panel">
+          <div class="panel-heading"><div><div class="panel-kicker">CANONICAL INTELLIGENCE</div><h2>Indicator registry</h2></div><div class="registry-actions"><select id="type-filter" class="select-button" aria-label="Filter by indicator type"><option value="">All types</option><option value="ip">IP address</option><option value="domain">Domain</option><option value="url">URL</option><option value="hash_sha256">File hash</option><option value="cve">CVE</option></select><button class="button button-primary" id="registry-export"><span>↓</span> Export CSV</button></div></div>
+          <div class="table-scroll"><table class="alert-table registry-table"><thead><tr><th>INDICATOR</th><th>TYPE</th><th>CATEGORY</th><th>SEVERITY</th><th>CONFIDENCE</th><th>SOURCE</th><th>TLP</th></tr></thead><tbody id="indicator-rows"></tbody></table></div>
+          <div class="table-footer"><span id="registry-count">Loading indicators</span><span>Canonical records · SQLite</span></div>
+        </section>
+      </section>
+      <footer class="app-footer"><span>THREATLENS <b>v1.0.0</b></span><span>Intelligence for decisive action <i>·</i> <span class="footer-live">API CONNECTED</span></span></footer>
+    </main>
+  </div>
+
+  <div class="toast-region" id="toast-region" aria-live="polite"></div>
+  <div class="drawer-backdrop hidden" id="drawer-backdrop"></div>
+  <aside class="detail-drawer" id="detail-drawer" aria-label="Alert details" aria-hidden="true">
+    <div class="drawer-top"><span class="panel-kicker">ALERT DETAILS</span><button class="icon-button drawer-close" id="drawer-close" aria-label="Close details">×</button></div>
+    <div id="drawer-content"></div>
+  </aside>
+  <script src="/app.js" defer></script>
+</body>
+</html>
